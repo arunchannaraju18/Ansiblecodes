@@ -1,0 +1,18 @@
+- hosts: 192.168.43.54
+  vars_prompt:
+      - name: ip_masternode
+        private: no
+        prompt: "enter the masternode ip"
+        
+  tasks:
+
+  - name: configuration of core-site file
+    blockinfile:
+      path: "/etc/hadoop/core-site.xml"
+      insertafter: "<configuration>"
+      content: |
+          <property>
+          <name>fs.default.name</name>
+          <value>hdfs://{{  ip_masternode  }}:9001</value>
+          </property>
+

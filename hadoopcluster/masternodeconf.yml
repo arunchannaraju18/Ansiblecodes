@@ -1,0 +1,45 @@
+- hosts: 192.168.43.53
+  vars_prompt:
+      - name: namenode
+        private: no
+        prompt: "enter the namenode"
+        
+  tasks:
+  
+  - name: creating the namenode
+    file:
+      state: directory
+      path: "/{{ namenode }}"
+
+  - name: configuration of hdfs-site file
+    blockinfile:
+      path: "/etc/hadoop/hdfs-site.xml"
+      insertafter: "<configuration>"
+      content: |
+          <property>
+          <name>dfs.name.dir</name>
+          <value>/{{ namenode }}</value>
+          </property>
+
+  - name: configuration of core-site file
+    blockinfile:
+      path: "/etc/hadoop/core-site.xml"
+      insertafter: "<configuration>"
+      content: |
+          <property>
+          <name>fs.default.name</name>
+          <value>hdfs://0.0.0.0:9001</value>
+          </property>
+
+  - name: formatting namenode
+    command: "hadoop namenode -format -force"
+
+  - name: start name node
+    command: "hadoop-daemon.sh start namenode"
+
+  - service:
+       name: firewalld
+       state: stopped
+       enabled: yes
+
+  

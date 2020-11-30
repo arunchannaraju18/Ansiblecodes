@@ -1,0 +1,48 @@
+- hosts: 192.168.43.59
+  vars_prompt:
+      - name: slavenode
+        private: no
+        prompt: "enter the slavenode"
+
+      - name: ip_master
+        private: no
+        prompt: "enter the master ip"
+        
+  tasks:
+
+  - name: creating the datanode
+    file:
+      state: directory
+      path: "/{{ slavenode }}"
+  
+  - name: configuration of hdfs-site file
+    blockinfile:
+      path: "/etc/hadoop/hdfs-site.xml"
+      insertafter: "<configuration>"
+      content: |
+          <property>
+          <name>dfs.name.dir</name>
+          <value>/{{  slavenode  }}</value>
+          </property>
+
+  - name: configuration of core-site file
+    blockinfile:
+      path: "/etc/hadoop/core-site.xml"
+      insertafter: "<configuration>"
+      content: |
+          <property>
+          <name>fs.default.name</name>
+          <value>hdfs://{{  ip_master  }}:9001</value>
+          </property>
+
+  
+  - name: start data node
+    command: "hadoop-daemon.sh start datanode"
+
+  - service:
+       name: firewalld
+       state: stopped
+       enabled: yes
+
+
+ 
