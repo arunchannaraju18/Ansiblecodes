@@ -21,7 +21,7 @@
       insertafter: "<configuration>"
       content: |
           <property>
-          <name>dfs.name.dir</name>
+          <name>dfs.data.dir</name>
           <value>/{{  slavenode  }}</value>
           </property>
 
