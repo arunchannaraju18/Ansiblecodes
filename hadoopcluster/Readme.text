@@ -1,0 +1,28 @@
+update all the ip's of masternode, slavenode and clientnodes in the respective files
+ex: - hosts: <ip of respectivenodes>
+    - hosts: 192.168.43.2
+
+Download these two files
+1 . jdk-8u171-linux-x64.rpm
+2 . hadoop-1.2.1-1.x86_64.rpm
+
+cd hadoopcluster
+
+The below command should be executed in all the nodes
+# ansible-playbook hadoopinstallfiles.yml
+
+The below command should be executed in master node 
+# ansible-playbook masternodeconf.yml
+
+The below command shouldbe executed in slave nodes 
+# ansible-playbook slavenodeconf.yml
+
+The below command should be executed in client nodes 
+# ansible-playbook clientnodeconf.yml
+
+
+
+
+
+
+
