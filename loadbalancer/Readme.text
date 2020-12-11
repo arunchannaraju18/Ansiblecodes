@@ -1,0 +1,27 @@
+1 edit the configuration files
+   #gedit /etc/ansible/ansible.cfg
+   [default]
+   inventory = /root/ip.txt
+   host_key_checking = False
+   
+2 edit ip.txt
+  #gedit ip.txt
+  [webservers]
+  <ip adress of webserver>  ansible_user=<user name>  ansible_ssh_pass=<password>  ansible_connection=ssh
+  
+  [loadbalancer]
+  <ip adress of loadbalancer>  ansible_user=<user name>  ansible_ssh_pass=<password>  ansible_connection=ssh
+  
+3 clone the repository from github
+  #git clone https://github.com/aruncgowda/Ansiblecodes.git
+  
+4 #cd /Ansiblecodes/loadbalancer
+
+5 #ansible-playbook loadb.yml
+
+6 enter the port number on which haproxy should run  ex: 8080
+
+7 go to web browser enter <ip address of loadbalancer>:<portnumber u entered>  ex:192.168.43.23:8080
+
+  
+   
